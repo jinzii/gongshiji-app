@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#4F46E5">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="工时记">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏰</text></svg>">
+  <title>工时记 - 工作时长记录</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- 顶部头部 -->
+    <header class="header">
+      <div class="header-content">
+        <h1 class="app-title">⏰ 工时记</h1>
+        <button class="btn-export" id="btnExport" title="导出数据">📤</button>
+      </div>
+    </header>
+
+    <!-- 今日录入卡片 -->
+    <section class="input-card">
+      <div class="input-header">
+        <span class="input-label">记录今天</span>
+        <span class="input-date" id="todayDate"></span>
+      </div>
+      <div class="input-row">
+        <input
+          type="number"
+          id="hoursInput"
+          class="hours-input"
+          placeholder="0.0"
+          step="0.5"
+          min="0"
+          max="24"
+          inputmode="decimal"
+        />
+        <span class="unit">小时</span>
+        <button class="btn-save" id="btnSave">保存</button>
+      </div>
+      <!-- 快捷按钮 -->
+      <div class="quick-row">
+        <span class="quick-label">快捷:</span>
+        <button class="quick-btn" data-hours="4">4h</button>
+        <button class="quick-btn" data-hours="6">6h</button>
+        <button class="quick-btn" data-hours="7.5">7.5h</button>
+        <button class="quick-btn" data-hours="8">8h</button>
+        <button class="quick-btn" data-hours="11.5">11.5h</button>
+      </div>
+    </section>
+
+    <!-- 统计卡片 -->
+    <section class="stats-card">
+      <div class="stat-item">
+        <div class="stat-value" id="statMonthTotal">0.0</div>
+        <div class="stat-label">本月总时长 (h)</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value" id="statDays">0</div>
+        <div class="stat-label">工作天数</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-value" id="statAvg">0.0</div>
+        <div class="stat-label">日均 (h)</div>
+      </div>
+    </section>
+
+    <!-- 月历卡片 -->
+    <section class="calendar-card">
+      <div class="calendar-header">
+        <button class="nav-btn" id="prevMonth">‹</button>
+        <h2 class="calendar-title" id="calendarTitle"></h2>
+        <button class="nav-btn" id="nextMonth">›</button>
+        <button class="today-btn" id="goToday">今天</button>
+      </div>
+      <div class="weekdays">
+        <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+      </div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </section>
+
+    <!-- 底部明细列表 -->
+    <section class="detail-card">
+      <div class="detail-header">
+        <h3>📋 本月明细</h3>
+        <button class="btn-clear" id="btnClear">清空本月</button>
+      </div>
+      <div class="detail-list" id="detailList"></div>
+    </section>
+
+    <footer class="footer">
+      <span>数据保存在本地浏览器中</span>
+    </footer>
+  </div>
+
+  <!-- Toast 提示 -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+  <script>
+    // 注册 Service Worker (PWA 离线支持)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
