@@ -1,0 +1,11 @@
+{
+  "appId": "com.gongshiji.app",
+  "appName": "工时记",
+  "webDir": "www",
+  "server": {
+    "allowNavigation": ["*"]
+  },
+  "android": {
+    "backgroundColor": "#4F46E5"
+  }
+}
